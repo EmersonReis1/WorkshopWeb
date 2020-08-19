@@ -1,0 +1,191 @@
+﻿@model WorkshopWeb.Models.RegisterNewUserViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+
+<link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+
+<link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+
+<link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+
+<link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+
+<link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+
+<link rel="stylesheet" type="text/css" href="~/css/util.css">
+
+<link rel="stylesheet" type="text/css" href="~/css/main.css">
+<!--===============================================================================================-->
+
+
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form" method="post">
+
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <span class="login100-form-title p-b-34 p-t-27">
+                    Register New User
+                </span>
+
+                <div class="text-success">
+                    <p style="font-size:15px; color: white ; padding-top: 15px">
+                        @ViewBag.Message
+                    </p>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter your First Name">
+                    <input asp-for="FirstName" class="input100" type="text" placeholder="First Name">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter your Last Name">
+                    <input asp-for="LastName" class="input100" type="text" placeholder="Last Name">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter UserName">
+                    <input asp-for="UserName" class="input100" type="text" placeholder="UserName">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter Phone Number">
+                    <input asp-for="PhoneNumber" class="input100" type="number" placeholder="Phone Number">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter Nif">
+                    <input asp-for="Nif" class="input100" type="number" placeholder="Nif">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter your Address">
+                    <input asp-for="Address" class="input100" type="text" placeholder="Address">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+
+                @if (Model.Countries.Count() == 2)
+                {
+                    <div class="form-group">
+                        <label asp-for="CountryId" class="control-label" style="color:white;">*@Model.Countries.Last().Text </label>
+
+                    </div>
+                }
+                else
+                {
+                <div class="form-group">
+                    <label asp-for="CountryId" class="control-label"></label>
+                    <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+                }
+                
+
+                <div class="form-group">
+                    <label asp-for="CityId" class="control-label"></label>
+                    <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
+                    <span asp-validation-for="CityId" class="text-danger"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter Postal Code">
+                    <input asp-for="PostalCode" class="input100" type="number" placeholder="Postal Code">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <input asp-for="Password" class="input100" type="password" placeholder="Password">
+                    <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Confirm your password">
+                    <input asp-for="Confirm" class="input100" type="password" placeholder="Password">
+                    <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                </div>
+
+
+                <div class="container-login100-form-btn">
+                    <button type="submit" value="Register New User" class="login100-form-btn">
+                        Register
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+<script src="~/vendor/animsition/js/animsition.min.js"></script>
+
+<script src="~/vendor/bootstrap/js/popper.js"></script>
+
+<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="~/vendor/select2/select2.min.js"></script>
+
+<script src="~/vendor/daterangepicker/moment.min.js"></script>
+
+<script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+
+<script src="~/vendor/countdowntime/countdowntime.js"></script>
+
+<script src="~/js/main.js"></script>
+<!--===============================================================================================-->
+
+
+<div class="text-success">
+    <p>
+        @ViewBag.Message
+    </p>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    $(document).ready(function () {
+       debugger;
+     $("#CountryId").change(function () {
+             $("#CityId").empty();
+             $.ajax({
+                   type: 'POST',
+                   url: '@Url.Action("GetCitiesAsync")',
+                   dataType: 'json',
+                   data: {countryId: $("#CountryId").val() },
+                   success: function (cities) {
+                                 $("#CityId").append('<option value="0">(Select a city...)</option>');
+                                 $.each(cities, function (i, city) {
+                                           $("#CityId").append('<option value="'
+                                                  + city.id + '">'
+                                                  + city.name + '</option>');
+                                 });
+                   },
+                   error: function (ex) {
+                   alert('Failed to retrieve cities.' + ex);
+                            }
+             });
+             return false;
+     })
+});
+</script>
+   
+}
+

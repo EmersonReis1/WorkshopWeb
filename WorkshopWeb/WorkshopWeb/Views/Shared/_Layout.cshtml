@@ -6,37 +6,187 @@
     <title>@ViewData["Title"] - WorkshopWeb</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+
+        <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css"/>
+        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
+        @*<link rel="stylesheet" href="~/css/site.css" />*@
+
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/elegant-icons.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/nice-select.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/elegant-icons.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/nice-select.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/jquery-ui.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/slicknav.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WorkshopWeb</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-black.png" alt=""></a>
+        </div>
+        <div class="humberger__menu__cart">
+            <ul>
+                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+            </ul>
+            <div class="header__cart__price">item: <span>$150.00</span></div>
+        </div>
+        <div class="humberger__menu__widget">
+
+            <nav class="humberger__menu__nav mobile-menu">
+                <ul>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Account" asp-action="ChangeUser"><i class="fa fa-user"></i> @this.User.Identity.Name.</a>
+                            <ul class="header__menu__dropdown">
+                                <li> <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-user-circle"></i> Profile</a> </li>
+                                <li> <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                            </ul>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> Login</a>
+                            <ul class="header__menu__dropdown">
+                                <li> <a asp-area="" asp-controller="Account" asp-action="Register"><i class="fa fa-user-plus"></i> Register</a> </li>
+
+                            </ul>
+                        </li>
+
+                    }
                 </ul>
+            </nav>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+
+                <li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Service</a></li>
+                <li><a href="./shop-grid.html">Shop</a></li>
+                <li>
+                    <a href="#">Pages</a>
+                    <ul class="header__menu__dropdown">
+                        <li><a href="./shop-details.html">Shop Details</a></li>
+                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                        <li><a href="./checkout.html">Check Out</a></li>
+                        <li><a href="./blog-details.html">Blog Details</a></li>
+                    </ul>
+                </li>
+              <li><a href="./contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div id="mobile-menu-wrap"></div>
+        
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo-black.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <nav class="header__menu">
+                        <ul class="mr-auto">
+                            <li class="nav-item active"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index">Schedule Service</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li>
+                                <a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="./shop-details.html">Shop Details</a></li>
+                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                                    <li><a href="./checkout.html">Check Out</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./contact.html">Contact</a></li>
+
+                            @if (this.User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="ChangeUser"><i class="fa fa-user"></i> @this.User.Identity.Name</a>
+                                    <ul class="header__menu__dropdown">
+                                        <li> <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-user-circle"></i> Profile</a> </li>
+                                        <li> <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                    </ul>
+                                </li>
+
+                            }
+                            else
+                            {
+                                    <li>
+                                        <a asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> Login</a>
+                                        <ul class="header__menu__dropdown">
+                                            <li> <a asp-area="" asp-controller="Account" asp-action="Register"><i class="fa fa-user-plus"></i> Register</a> </li>
+
+                                        </ul>
+                                    </li>
+
+                            }
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-2">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        </ul>
+                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
             </div>
         </div>
-    </nav>
+    </header>
+    <!-- Header Section End -->
 
     <partial name="_CookieConsentPartial" />
 
@@ -51,7 +201,18 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+
+        <!-- Js Plugins -->
+        <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+        @*<script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>*@
+        <script src="~/js/jquery-ui.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+        <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+        <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+        <script src="~/js/main.js" asp-append-version="true"></script>
+
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
@@ -66,7 +227,16 @@
                 crossorigin="anonymous"
                 integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+        <!-- Js Plugins -->
+        @*<script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery-ui.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+        <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+        <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+        <script src="~/js/main.js" asp-append-version="true"></script>*@
     </environment>
 
     @RenderSection("Scripts", required: false)
