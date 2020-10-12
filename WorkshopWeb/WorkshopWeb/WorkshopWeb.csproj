@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>a6015772-9dbb-4571-9667-7269d42bab24</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,8 +20,9 @@
     <PackageReference Include="MailKit" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureKeyVault.HostingStartup" Version="2.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />

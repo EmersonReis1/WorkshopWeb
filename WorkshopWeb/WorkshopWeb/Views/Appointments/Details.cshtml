@@ -1,0 +1,101 @@
+﻿@model WorkshopWeb.Data.Entities.AppointmentService
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.User == null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.UserNoRegistry.FirstName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserNoRegistry.FirstName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserNoRegistry.LastName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserNoRegistry.LastName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserNoRegistry.Email)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserNoRegistry.Email)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserNoRegistry.PhoneNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserNoRegistry.PhoneNumber)
+            </dd>
+        }
+        else
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.FirstName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.LastName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.LastName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.Email)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.Email)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.PhoneNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.PhoneNumber)
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryDate)
+        </dd>
+
+        <dt>
+            Car
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModelCar.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Services)
+        </dt>
+
+        @foreach (var item in Model.Services)
+        {
+            <dd>
+                @Html.DisplayFor(model => item.Service.Name)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressWorkshop)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressWorkshop.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

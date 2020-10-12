@@ -47,6 +47,12 @@ namespace WorkshopWeb.Data.Repositories
 
         }
 
+        public BrandCar GetBrandCar(ModelCar modelCar)
+        {
+            return _context.BrandCars.Where(b => b.Model == modelCar).FirstOrDefault();
+            
+        }
+
         public async Task<BrandCar> GetBrandCarAsync(ModelCar modelCar)
         {
             return await _context.BrandCars.Where(b => b.Model.Any(m => m.Id == modelCar.Id)).FirstOrDefaultAsync();

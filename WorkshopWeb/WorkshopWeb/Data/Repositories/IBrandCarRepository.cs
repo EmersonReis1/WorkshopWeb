@@ -37,5 +37,7 @@ namespace WorkshopWeb.Data.Repositories
 
 
 		Task<BrandCar> GetBrandCarAsync(ModelCar modelCar);
+
+		BrandCar GetBrandCar(ModelCar modelCar);
 	}
 }

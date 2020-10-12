@@ -29,6 +29,7 @@ namespace WorkshopWeb.Controllers
             _configuration = configuration;
             _mailHelper = mailHelper;
             _countryRepository = countryRepository;
+            
         }
 
         public IActionResult RegisterEmployees()
@@ -37,11 +38,13 @@ namespace WorkshopWeb.Controllers
             {
                 Roles = _userHelper.GetComboRoles(),
                 Countries = _countryRepository.GetComboCountries(),
-                Cities = _countryRepository.GetComboCities(0)
+                Cities = _countryRepository.GetComboCities(0),
+               
             };
 
             return this.View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> RegisterEmployees(RegisterNewEmployeesViewModel model)
@@ -80,20 +83,17 @@ namespace WorkshopWeb.Controllers
                         return this.View(model);
                     }
 
-                    var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                    var tokenLink = this.Url.Action("ConfirmEmail", "Account", new
-                    {
-                        userid = user.Id,
-                        token = myToken
-                    }, protocol: HttpContext.Request.Scheme);
+                    var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
 
-                    _mailHelper.SendMail(model.UserName, "Email confirmation", $"<h1>Email Confirmation</h1>" +
-                        $"To allow the user, " +
-                        $"Your Passwor is '{password}', " +
-                        $"please click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                    await _userHelper.ConfirmEmailAsync(user, token);
 
-                    this.ViewBag.Message = "The instructions to allow your user has been sent to email.";
+                    var myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
 
+                    var link = this.Url.Action("ResetPassword", "Account", new { token = myToken, email = user.Email }, protocol: HttpContext.Request.Scheme);
+
+                    _mailHelper.SendMail(model.UserName, "ER.Auto Create Password", _mailHelper.BodyMailConfirmation(link, user.FullName, "https://localhost:44399/"));
+
+                    this.ViewBag.Message = "The instructions to recover your password has been sent to email.";
 
                     return this.View(model);
                 }

@@ -74,10 +74,12 @@ namespace WorkshopWeb.Controllers
 
             if (country.Count() == 2 )
             {
+                var countryId = Convert.ToInt32(country.Last().Value);
+
                 var model1 = new RegisterNewUserViewModel
                 {
                     Countries = country,
-                    Cities = _countryRepository.GetListCities(Convert.ToInt32(country.Last().Value))
+                    Cities = _countryRepository.GetListCities(countryId),
                 };
 
                 return this.View(model1);
@@ -150,7 +152,7 @@ namespace WorkshopWeb.Controllers
                     this.ViewBag.Message = "The instructions to allow your user has been sent to email.";
 
 
-                    return this.View(model);
+                    return this.RedirectToAction("InfoConfirmEmail", "Account");
                 }
 
                 this.ModelState.AddModelError(string.Empty, "The user already exists.");

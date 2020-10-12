@@ -47,5 +47,14 @@ namespace WorkshopWeb.Models
 
 
         public IEnumerable<SelectListItem> Countries { get; set; }
+
+
+
+        //[Display(Name = "Workshop")]
+        //[Range(1, int.MaxValue, ErrorMessage = "You must select a Workshop")]
+        //public int WorkshopId { get; set; }
+
+
+        //public IEnumerable<SelectListItem> Workshops { get; set; }
     }
 }

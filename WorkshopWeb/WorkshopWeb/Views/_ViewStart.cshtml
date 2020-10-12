@@ -1,5 +1,5 @@
 ﻿
-@if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+@if (this.User.IsInRole("Admin") || this.User.IsInRole("Recessionist") || this.User.IsInRole("Mechanic"))
 {
     Layout = "_LayoutAdmin";
 }

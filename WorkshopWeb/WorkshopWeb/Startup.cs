@@ -32,11 +32,11 @@ namespace WorkshopWeb
                 cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
                 cfg.SignIn.RequireConfirmedEmail = true;
                 cfg.User.RequireUniqueEmail = true;
-                cfg.Password.RequireDigit = false;
-                cfg.Password.RequiredUniqueChars = 0;
-                cfg.Password.RequireLowercase = false;
+                cfg.Password.RequireDigit = true;
+                cfg.Password.RequiredUniqueChars = 1;
+                cfg.Password.RequireLowercase = true;
                 cfg.Password.RequireNonAlphanumeric = false;
-                cfg.Password.RequireUppercase = false;
+                cfg.Password.RequireUppercase = true;
                 cfg.Password.RequiredLength = 6;
 
             }).AddDefaultTokenProviders()
@@ -66,6 +66,15 @@ namespace WorkshopWeb
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IGeneratePassword, GeneratePassword>();
+
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IAppointmentServiceRepository, AppointmentServiceRepository>();
+            services.AddScoped<IAddressWorkshopRepository, AddressWorkshopRepository>();
+            services.AddScoped<IUserNoRegistryRepository, UserNoRegistryRepository>();
+            services.AddScoped<IReparationRepository, ReparationRepository>();
+            services.AddScoped<IApiCarHelper, ApiCarHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -101,6 +110,8 @@ namespace WorkshopWeb
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+           
         }
     }
 }

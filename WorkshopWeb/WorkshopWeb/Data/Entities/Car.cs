@@ -11,9 +11,7 @@ namespace WorkshopWeb.Data.Entities
     {
         public int Id { get; set; }
 
-     
-        public int ModelCarId { get; set; }
-
+        [Required]
         public ModelCar ModelCar { get; set; }
 
         [Display(Name = "Registration Plate")]
@@ -22,6 +20,7 @@ namespace WorkshopWeb.Data.Entities
 
         public User User { get; set; }
 
+        public UserNoRegistry UserNoRegistry { get; set; }
 
     }
 }

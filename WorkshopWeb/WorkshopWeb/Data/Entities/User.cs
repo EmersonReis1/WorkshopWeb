@@ -38,5 +38,6 @@ namespace WorkshopWeb.Data.Entities
         [Display(Name = "Full name")]
         public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
 
+
     }
 }

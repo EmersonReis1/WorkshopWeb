@@ -1,4 +1,4 @@
-﻿@model WorkshopWeb.Data.Entities.Car
+﻿@model WorkshopWeb.Models.CarDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,12 +10,17 @@
     <h4>Car</h4>
     <hr />
     <dl class="dl-horizontal">
-        
         <dt>
-            @Html.DisplayNameFor(model => model.ModelCarId)
+            @Html.DisplayNameFor(model => model.BrandCar.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ModelCarId)
+            @Html.DisplayFor(model => model.BrandCar.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelCar.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModelCar.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.RegistrationPlate)

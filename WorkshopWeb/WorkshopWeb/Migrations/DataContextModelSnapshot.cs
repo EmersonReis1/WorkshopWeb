@@ -129,6 +129,83 @@ namespace WorkshopWeb.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.AddressWorkshop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("CityId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("AddressWorkshops");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.AppointmentAndService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AppointmentServiceId");
+
+                    b.Property<int?>("ServiceId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("AppointmentAndServices");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.AppointmentService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressWorkshopId");
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<DateTime>("DeliveryDate");
+
+                    b.Property<int>("ModelCarId");
+
+                    b.Property<string>("RegistrationPlate");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<int?>("UserNoRegistryId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressWorkshopId");
+
+                    b.HasIndex("ModelCarId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserNoRegistryId");
+
+                    b.ToTable("AppointmentServices");
+                });
+
             modelBuilder.Entity("WorkshopWeb.Data.Entities.BrandCar", b =>
                 {
                     b.Property<int>("Id")
@@ -157,11 +234,15 @@ namespace WorkshopWeb.Migrations
 
                     b.Property<string>("UserId");
 
+                    b.Property<int?>("UserNoRegistryId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ModelCarId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserNoRegistryId");
 
                     b.ToTable("Cars");
                 });
@@ -217,6 +298,75 @@ namespace WorkshopWeb.Migrations
                     b.HasIndex("BrandCarId");
 
                     b.ToTable("ModelCars");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.Reparation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AppointmentId");
+
+                    b.Property<int?>("BrandCarId");
+
+                    b.Property<int?>("CarId");
+
+                    b.Property<DateTime>("DateCreate");
+
+                    b.Property<string>("Observation");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("UserEmployeeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("BrandCarId");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("UserEmployeeId");
+
+                    b.ToTable("Reparations");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.ServiceDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ReparationId");
+
+                    b.Property<int?>("ServiceId");
+
+                    b.Property<bool>("State");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReparationId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ServiceDetails");
                 });
 
             modelBuilder.Entity("WorkshopWeb.Data.Entities.User", b =>
@@ -285,6 +435,25 @@ namespace WorkshopWeb.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.UserNoRegistry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserNoRegistrys");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -330,6 +499,46 @@ namespace WorkshopWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.AddressWorkshop", b =>
+                {
+                    b.HasOne("WorkshopWeb.Data.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.AppointmentAndService", b =>
+                {
+                    b.HasOne("WorkshopWeb.Data.Entities.AppointmentService")
+                        .WithMany("Services")
+                        .HasForeignKey("AppointmentServiceId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.AppointmentService", b =>
+                {
+                    b.HasOne("WorkshopWeb.Data.Entities.AddressWorkshop", "AddressWorkshop")
+                        .WithMany()
+                        .HasForeignKey("AddressWorkshopId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WorkshopWeb.Data.Entities.ModelCar", "ModelCar")
+                        .WithMany()
+                        .HasForeignKey("ModelCarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WorkshopWeb.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.UserNoRegistry", "UserNoRegistry")
+                        .WithMany()
+                        .HasForeignKey("UserNoRegistryId");
+                });
+
             modelBuilder.Entity("WorkshopWeb.Data.Entities.Car", b =>
                 {
                     b.HasOne("WorkshopWeb.Data.Entities.ModelCar", "ModelCar")
@@ -340,6 +549,10 @@ namespace WorkshopWeb.Migrations
                     b.HasOne("WorkshopWeb.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.UserNoRegistry", "UserNoRegistry")
+                        .WithMany()
+                        .HasForeignKey("UserNoRegistryId");
                 });
 
             modelBuilder.Entity("WorkshopWeb.Data.Entities.City", b =>
@@ -354,6 +567,36 @@ namespace WorkshopWeb.Migrations
                     b.HasOne("WorkshopWeb.Data.Entities.BrandCar")
                         .WithMany("Model")
                         .HasForeignKey("BrandCarId");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.Reparation", b =>
+                {
+                    b.HasOne("WorkshopWeb.Data.Entities.AppointmentService", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.BrandCar", "BrandCar")
+                        .WithMany()
+                        .HasForeignKey("BrandCarId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.User", "UserEmployee")
+                        .WithMany()
+                        .HasForeignKey("UserEmployeeId");
+                });
+
+            modelBuilder.Entity("WorkshopWeb.Data.Entities.ServiceDetail", b =>
+                {
+                    b.HasOne("WorkshopWeb.Data.Entities.Reparation")
+                        .WithMany("ServiceDetails")
+                        .HasForeignKey("ReparationId");
+
+                    b.HasOne("WorkshopWeb.Data.Entities.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
                 });
 
             modelBuilder.Entity("WorkshopWeb.Data.Entities.User", b =>

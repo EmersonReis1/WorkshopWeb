@@ -13,11 +13,13 @@ namespace WorkshopWeb.Data
     {
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
+        private readonly IApiCarHelper _apiCarHelper;
 
-        public SeedDb(DataContext context, IUserHelper userHelper)
+        public SeedDb(DataContext context, IUserHelper userHelper, IApiCarHelper apiCarHelper)
         {
             _context = context;
-           _userHelper = userHelper;
+            _userHelper = userHelper;
+            _apiCarHelper = apiCarHelper;
         }
 
         public async Task SeedAsync()
@@ -28,68 +30,6 @@ namespace WorkshopWeb.Data
             await _userHelper.CheckRoleAsync("Customer");
             await _userHelper.CheckRoleAsync("Mechanic");
             await _userHelper.CheckRoleAsync("Recessionist");
-
-            if (!_context.BrandCars.Any())
-            {
-
-                //LIST MODELS SEAT
-                var listSeat = new List<ModelCar>();
-
-                listSeat.Add(new ModelCar { Name = "Ibiza " });
-                listSeat.Add(new ModelCar { Name = "Leon" });
-                listSeat.Add(new ModelCar { Name = "Arona " });
-                listSeat.Add(new ModelCar { Name = "Ateca" });
-
-                _context.BrandCars.Add( new BrandCar { Name = "SEAT", Model = listSeat}) ;
-
-
-                //LIST MODELS BMW
-                var listBMW = new List<ModelCar>();
-
-                listBMW.Add(new ModelCar { Name = "Série 1" });
-                listBMW.Add(new ModelCar { Name = "X8" });
-                listBMW.Add(new ModelCar { Name = "M240I Coupé" });
-                listBMW.Add(new ModelCar { Name = "I8 Coupé" });
-
-                _context.BrandCars.Add(new BrandCar { Name = "BMW", Model = listBMW });
-
-                //LIST MODELS Toyota
-                var listToyota = new List<ModelCar>();
-
-                listToyota.Add(new ModelCar { Name = "Auris" });
-                listToyota.Add(new ModelCar { Name = "Yaris" });
-                listToyota.Add(new ModelCar { Name = "Corona" });
-                listToyota.Add(new ModelCar { Name = "GT-86" });
-                listToyota.Add(new ModelCar { Name = "Corolla" });
-
-                _context.BrandCars.Add(new BrandCar { Name = "Toyota", Model = listToyota });
-
-                //LIST MODELS Volvo
-                var listVolvo = new List<ModelCar>();
-
-                listVolvo.Add(new ModelCar { Name = "V90" });
-                listVolvo.Add(new ModelCar { Name = "Xc40" });
-                listVolvo.Add(new ModelCar { Name = "S60" });
-                listVolvo.Add(new ModelCar { Name = "V60" });
-                listVolvo.Add(new ModelCar { Name = "S90" });
-                listVolvo.Add(new ModelCar { Name = "Xc90" });
-
-                _context.BrandCars.Add(new BrandCar { Name = "Volvo", Model = listVolvo });
-
-                //LIST MODELS Volvo
-                var listCitroen = new List<ModelCar>();
-
-                listCitroen.Add(new ModelCar { Name = "C1" });
-                listCitroen.Add(new ModelCar { Name = "C-Elysee" });
-                listCitroen.Add(new ModelCar { Name = "Berlingo" });
-                listCitroen.Add(new ModelCar { Name = "C4 Cactus" });
-                listCitroen.Add(new ModelCar { Name = "C5 Aircross" });
-                listCitroen.Add(new ModelCar { Name = "C-Zero" });
-
-                _context.BrandCars.Add(new BrandCar { Name = "Citroen", Model = listCitroen });
-
-                await _context.SaveChangesAsync();
-            }
 
             if (!_context.Countries.Any())
             {
@@ -110,6 +50,78 @@ namespace WorkshopWeb.Data
                 await _context.SaveChangesAsync();
             }
 
+            if (!_context.BrandCars.Any())
+            {
+
+                
+                var list = new List<BrandCar>();
+
+                var apiList = await _apiCarHelper.GetBrandsApiAsync();
+
+                foreach (var item in apiList)
+                {
+                    var listModel = new List<ModelCar>();
+                   
+                        var model = await _apiCarHelper.GetModelsApiAsync(item.Id);
+
+                        if (model != null)
+                        {
+                            foreach (var itemModel in model)
+                            {
+                                listModel.Add(new ModelCar { Name = itemModel.Name });
+
+                            }
+
+                        }
+                   
+                    
+                    list.Add(new BrandCar { Name = item.Name, Model = listModel });
+
+                    if (list.Count() == 59)
+                    {
+                        break;
+                    }
+                }
+
+
+                await _context.BrandCars.AddRangeAsync(list);
+
+                await _context.SaveChangesAsync();
+            }
+
+            if (!_context.Services.Any())
+            {
+                var services = new List<Service>();
+                services.Add(new Service { Name = "Oil change and levels" });
+                services.Add(new Service { Name = "Shock Absorbers" });
+                services.Add(new Service { Name = "Brakes" });
+                services.Add(new Service { Name = "Filters" });
+                services.Add(new Service { Name = "Air conditioning" });
+                services.Add(new Service { Name = "Tires" });
+                services.Add(new Service { Name = "Battery" });
+                services.Add(new Service { Name = "Outros" });
+                services.Add(new Service { Name = "Alignment" });
+                services.Add(new Service { Name = "Distribution KITS" });
+                services.Add(new Service { Name = "Embraiagems" });
+                services.Add(new Service { Name = "Candles" });
+
+                await _context.Services.AddRangeAsync(services);
+
+                await _context.SaveChangesAsync();
+            }
+
+            if (!_context.AddressWorkshops.Any())
+            {
+                var Address = new List<AddressWorkshop>();
+                Address.Add(new AddressWorkshop { Name = "ER.Auto Lisboa", Address = "rua 1", City = new City { Name = "Lisboa" }, CityId = 1 });
+                Address.Add(new AddressWorkshop { Name = "ER.Auto Porto", Address = "rua 1", City = new City { Name = "Porto" }, CityId = 2 });
+
+
+                await _context.AddressWorkshops.AddRangeAsync(Address);
+
+                await _context.SaveChangesAsync();
+            }
+
             var user = await _userHelper.GetUserByEmailAsync("emerson.teste.22@gmail.com");
             if (user == null)
             {
@@ -126,7 +138,7 @@ namespace WorkshopWeb.Data
                     City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
                 };
 
-                var result = await _userHelper.AddUserAsync(user, "123456");
+                var result = await _userHelper.AddUserAsync(user, "EReis1234");
 
 
 

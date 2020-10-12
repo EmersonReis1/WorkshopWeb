@@ -1,0 +1,138 @@
+﻿
+@model WorkshopWeb.Models.ReparationViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+<br />
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">New Services</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AllServices.First().Brand)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AllServices.First().Model)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AllServices.First().RegistrationPlate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AllServices.First().Services)
+                            </th>
+
+                            <th>Accept</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.AllServices)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Brand)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Model)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RegistrationPlate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Services)
+                                </td>
+
+                                <td>
+                                    <a asp-action="Accept" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-check"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">My Services</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserServices.First().Brand)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserServices.First().Model)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserServices.First().RegistrationPlate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserServices.First().Services)
+                            </th>
+
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UserServices)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Brand)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Model)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RegistrationPlate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Services)
+                                </td>
+
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-default"><i class="fas fa-info"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+        });
+
+    </script>
+}
+
+
+
+

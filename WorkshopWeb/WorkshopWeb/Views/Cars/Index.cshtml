@@ -1,49 +1,117 @@
-﻿@model IEnumerable<WorkshopWeb.Models.CarDetailsViewModel>
+﻿@model WorkshopWeb.Helpers.PaginatedHelper<WorkshopWeb.Data.Entities.Car>
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Cars</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                Type
             </th>
+
+            @if (this.User.IsInRole("Admin") || this.User.IsInRole("Recessionist"))
+            {
+
+                <th>
+                    @Html.DisplayNameFor(model => model.First().User.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().User.PhoneNumber)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.First().User.Email)
+                </th>
+
+            }
+
             <th>
-                @Html.DisplayNameFor(model => model.RegistrationPlate)
+
+                @Html.DisplayNameFor(model => model.First().RegistrationPlate)
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (this.User.IsInRole("Admin") || this.User.IsInRole("Recessionist"))
+                {
+                    @if (item.User != null)
+                    {
+                        <td>
+                            <i class="fas fa-user"></i>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                        </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationPlate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrandCarName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrandCarName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CarId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a>
-            </td>
-        </tr>
-}
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Email)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <i class="fas fa-user-slash"></i>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserNoRegistry.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modmodelItemel => item.UserNoRegistry.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modmodelItemel => item.UserNoRegistry.Email)
+                        </td>
+
+                    }
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationPlate)
+                </td>
+
+
+                <td>
+                    
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info" id="btnDetails">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" id="btnDelete">Cancel</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+

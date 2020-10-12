@@ -11,23 +11,28 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CarId" />
+            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label asp-for="BrandCarId" class="control-label"></label>
-                <input asp-for="BrandCarId" class="form-control" />
-                <span asp-validation-for="BrandCarId" class="text-danger"></span>
+                <label asp-for="BrandId" class="control-label"></label>
+                <select asp-for="BrandId" asp-items="Model.Brands" class="form-control"></select>
+                <span asp-validation-for="BrandId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="ModelCarId" class="control-label"></label>
-                <input asp-for="ModelCarId" class="form-control" />
+                <select asp-for="ModelCarId" asp-items="Model.ModelCars" class="form-control"></select>
                 <span asp-validation-for="ModelCarId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="RegistrationPlate" class="control-label"></label>
                 <input asp-for="RegistrationPlate" class="form-control" />
                 <span asp-validation-for="RegistrationPlate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -41,4 +46,30 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#BrandId").change(function () {
+                $("#ModelCarId").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetModelCarsAsync")',
+                    dataType: 'json',
+                    data: { brandId: $("#BrandId").val() },
+                    success: function (cities) {
+                        debugger;
+                        $("#ModelCarId").append('<option value="0">(Select a model...)</option>');
+                        $.each(cities, function (i, city) {
+                            $("#ModelCarId").append('<option value="'
+                                + city.id + '">'
+                                + city.name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve model.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
 }

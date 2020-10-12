@@ -8,7 +8,7 @@ using WorkshopWeb.Data.Entities;
 
 namespace WorkshopWeb.Data
 {
-    //TODO : Add Users
+    
     public class DataContext : IdentityDbContext<User>
     {
         public DbSet<Car> Cars { get; set; }
@@ -20,6 +20,21 @@ namespace WorkshopWeb.Data
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<City> Cities { get; set; }
+
+        public DbSet<Service> Services { get; set; }
+
+        public DbSet<AddressWorkshop> AddressWorkshops { get; set; }
+
+        public DbSet<AppointmentService> AppointmentServices { get; set; }
+
+        public DbSet<AppointmentAndService> AppointmentAndServices { get; set; }
+        
+        public DbSet<UserNoRegistry> UserNoRegistrys { get; set; }
+
+        public DbSet<Reparation> Reparations { get; set; }
+
+        public DbSet<ServiceDetail> ServiceDetails { get; set; }
+
 
         public DataContext(DbContextOptions options) : base(options)
         {

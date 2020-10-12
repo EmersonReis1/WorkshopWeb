@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,7 +70,7 @@ namespace WorkshopWeb.Helpers
             {
                 Text = r.Name,
                 Value = r.Name
-                
+
             }).OrderBy(l => l.Text).ToList();
 
             list.Insert(0, new SelectListItem
@@ -82,10 +82,14 @@ namespace WorkshopWeb.Helpers
             return list;
         }
 
-     
+
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
             return await _userManager.FindByEmailAsync(email);
         }
 
